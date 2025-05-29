@@ -16,6 +16,7 @@ public class ChangeRequestService {
     public ChangeRequestEntity submitChange(ChangeRequestEntity changeRequest) {
         changeRequest.setStatus(ChangeStatus.valueOf("PENDING_REVIEW"));
         return changeRequestRepository.save(changeRequest);
+
     }
 
     public ChangeRequestEntity approveChange(Long id) {
