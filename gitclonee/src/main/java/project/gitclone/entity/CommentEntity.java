@@ -1,58 +1,111 @@
 package project.gitclone.entity;
 
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
+public class CommentEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Lob
+    private String commentText;
+
+    private LocalDateTime createdAt;
+
+    @ManyToOne
+    @JoinColumn(name = "created_by_id")
+    private UserEntity createdBy;
+
+    @ManyToOne
+    @JoinColumn(name = "change_request_id")  // ✅ This is required
+    private ChangeRequestEntity changeRequest;
+
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        thpackage project.gitclone.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-    @Entity
-    public class CommentEntity {
+        @Entity
+        @Table(name = "comments")
+        public class CommentEntity {
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id;
+            @Id
+            @GeneratedValue(strategy = GenerationType.IDENTITY)
+            private Long id;
 
-        @Column(nullable = false)
-        private String text;
+            @Lob
+            @Column(nullable = false)
+            private String commentText;
 
-        @ManyToOne
-        @JoinColumn(name = "author_id", nullable = false)
-        private UserEntity author;
+            private LocalDateTime createdAt;
 
-        private LocalDateTime createdAt;
+            @ManyToOne
+            @JoinColumn(name = "created_by_id", nullable = false)
+            private UserEntity createdBy;
 
-        // Getters and Setters
+            @ManyToOne
+            @JoinColumn(name = "change_request_id", nullable = false)
+            private ChangeRequestEntity changeRequest;
 
-        public Long getId() {
-            return id;
+            public CommentEntity() {}
+
+            // Getters and setters...
+            public Long getId() { return id; }
+            public void setId(Long id) { this.id = id; }
+
+            public String getCommentText() { return commentText; }
+            public void setCommentText(String commentText) { this.commentText = commentText; }
+
+            public LocalDateTime getCreatedAt() { return createdAt; }
+            public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+
+            public UserEntity getCreatedBy() { return createdBy; }
+            public void setCreatedBy(UserEntity createdBy) { this.createdBy = createdBy; }
+
+            public ChangeRequestEntity getChangeRequest() { return changeRequest; }
+            public void setChangeRequest(ChangeRequestEntity changeRequest) { this.changeRequest = changeRequest; }
         }
-
-        public void setId(Long id) {
-            this.id = id;
-        }
-
-        public String getText() {
-            return text;
-        }
-
-        public void setText(String text) {
-            this.text = text;
-        }
-
-        public UserEntity getAuthor() {
-            return author;
-        }
-
-        public void setAuthor(UserEntity author) {
-            this.author = author;
-        }
-
-        public LocalDateTime getCreatedAt() {
-            return createdAt;
-        }
-
-        public void setCreatedAt(LocalDateTime createdAt) {
-            this.createdAt = createdAt;
-        }
+        is.id = id;
     }
 
+    public String getCommentText() {
+        return commentText;
+    }
 
+    public void setCommentText(String commentText) {
+        this.commentText = commentText;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public UserEntity getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(UserEntity createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public ChangeRequestEntity getChangeRequest() {
+        return changeRequest;
+    }
+
+    public void setChangeRequest(ChangeRequestEntity changeRequest) {
+        this.changeRequest = changeRequest;
+    }
+}

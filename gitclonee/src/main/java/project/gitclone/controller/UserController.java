@@ -1,6 +1,5 @@
 package project.gitclone.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,18 +12,28 @@ import java.util.Optional;
 @RequestMapping("/api/users")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @PostMapping("/save")
-    public ResponseEntity<?> saveUser(@RequestBody UserEntity user) {
+    // Constructor injection (preferred over @Autowired on fields)
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    // POST /api/users
+    @PostMapping
+    public ResponseEntity<String> saveUser(@RequestBody UserEntity user) {
         userService.saveUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body("User saved successfully");
     }
 
+    // GET /api/users/{id}
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<UserEntity>> getUser(@PathVariable Long id) {
+    public ResponseEntity<?> getUser(@PathVariable Long id) {
         Optional<UserEntity> user = userService.getUserById(id);
-        return ResponseEntity.ok(user);
+        if (user.isPresent()) {
+            return ResponseEntity.ok(user.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found with id: " + id);
+        }
     }
 }
