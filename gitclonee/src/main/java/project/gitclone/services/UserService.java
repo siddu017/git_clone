@@ -1,6 +1,5 @@
 package project.gitclone.services;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.gitclone.entity.Role;
@@ -40,18 +39,16 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    // Find all users with a specific role (e.g., EMPLOYEE, TEAM_LEADER)
+    // Find all users with a specific Role enum
     public List<UserEntity> findUsersByRole(Role role) {
-
-
-        return userRepository.findByRole(String.valueOf(role));
+        return userRepository.findByRole(role);
     }
 
-    // Convert string to Role and fetch users (useful if input is from a request)
+    // Convert String roleName to Role enum and fetch users
     public List<UserEntity> findUsersByRoleName(String roleName) {
         try {
             Role role = Role.valueOf(roleName.toUpperCase());
-            return userRepository.findByRole(String.valueOf(role));
+            return userRepository.findByRole(role);
         } catch (IllegalArgumentException e) {
             throw new RuntimeException("Invalid role: " + roleName);
         }

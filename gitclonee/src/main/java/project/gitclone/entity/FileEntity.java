@@ -9,7 +9,7 @@ public class FileEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String fileName;
+    private String filePath;
     @Lob
     private String content;
     private String branchName;
