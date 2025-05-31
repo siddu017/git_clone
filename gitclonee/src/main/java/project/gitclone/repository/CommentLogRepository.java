@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface CommentLogRepository extends JpaRepository<CommentEntity, Long> {
     List<CommentEntity> findByChangeRequest(ChangeRequestEntity changeRequest);
-    List<CommentEntity> findByCommentedBy(UserEntity user);
+    List<CommentEntity> findByCreatedBy(UserEntity user);
 }
